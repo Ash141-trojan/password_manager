@@ -13,8 +13,11 @@ void encryptdecrpyt(string &data){
 
 void addpass(){
     string site,user,pass;
-    ofstream file("vault.txt");
-    if (file.is_open()){
+    ofstream out("vault.txt");
+    if(!out.is_open()){
+        cout<<"Error while opening file for adding password \n";
+        return;
+    }
         cout<<"enter website name:";
         cin>>site;
         cout<<"enter username:";
@@ -23,24 +26,27 @@ void addpass(){
         cin>>pass;
         encryptdecrpyt(user);
         encryptdecrpyt(pass);
-        file<<site<<" "<<user<<" "<<pass;
-    }
-    file.close();
-    cout<<"Saved";
+        out<<site<<" "<<user<<" "<<pass;
+    out.close();
+    cout<<"  Saved \n ";
 }
 
 void viewpass(){
-    ifstream file("vault.txt");
+    ifstream in("vault.txt");
     string site, user,pass;
-    while (file>>site>>user>>pass)
+    if(!in.is_open()){
+        cout<<"Error while opening file for reading \n";
+        return;
+    }
+    while (in>>site>>user>>pass)
     {
-        cout<<"\nsite: "<<site<<endl;
+        cout<<"\n site: "<<site<<endl;
         encryptdecrpyt(user);
         encryptdecrpyt(pass);
-        cout<<"\nusername: "<<user<<endl;
-        cout<<"\nPassword: "<<pass<<endl;
+        cout<<"\n username: "<<user<<endl;
+        cout<<"\n Password: "<<pass<<endl;
     }
-    file.close();
+    in.close();
 }
 
 void menu(){
@@ -72,7 +78,7 @@ void menu(){
 
 int main(){
 
-    string pass="admin@123";
+    const string pass="admin@123";
     string input;
     cout<<"enter master password:";
     cin>>input;
