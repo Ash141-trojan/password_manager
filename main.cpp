@@ -14,7 +14,7 @@ class password{
 
     public:
 
-        main(){
+        password(){
             std::cout<<"Enter the master password : ";
             std::string line;
             std::getline(std::cin,line);
