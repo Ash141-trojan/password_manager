@@ -17,6 +17,10 @@ class password{
         std::string mainUser; // idk what this does so far
         const std::string path = "password.txt"; // hardcoding this value for now , can make it dynamic later
         const int prefixSize = 5; // adding prefix to make it possible to tell between site , user , password. 
+        
+        std::vector<storage> store;
+        int cnt = 0;
+
 
     public:
 
@@ -64,7 +68,7 @@ class password{
         }
 
 
-        int getPass(std::ifstream &in , std::vector<storage> &storage ){ // return 0 on success , -1 for fail as usual
+        int getPass(std::ifstream &in ){ // return 0 on success , -1 for fail as usual
             if(!in.is_open()){
                 std::cout<<"Error while reading passwords , aborting \n";
                 return -1;
@@ -75,13 +79,13 @@ class password{
 
             // we will read file line by line
             std::string line = "";
-            int cnt = 0;
+            
 
-            while(std::getline(in,line) && cnt < storage.size()){
+            while(std::getline(in,line) && cnt < store.size()){
                 std::string content =  line.substr(0,prefixSize);
-                if(content == std::string("site:")) storage[cnt].site = line.substr(prefixSize);
-                if(content == std::string("user:")) storage[cnt].user = line.substr(prefixSize);
-                if(content == std::string("pass:")) storage[cnt++].pass = line.substr(prefixSize);
+                if(content == std::string("site:")) store[cnt].site = line.substr(prefixSize);
+                if(content == std::string("user:")) store[cnt].user = line.substr(prefixSize);
+                if(content == std::string("pass:")) store[cnt++].pass = line.substr(prefixSize);
             }
 
             return 0;
@@ -96,9 +100,8 @@ class password{
 
         void viewPass(){ // wrapper around getPass() because getPass() is a flaming piece of mess 
             std::ifstream in(path);
-            std::vector<storage> store;
 
-            if(!getPass(in,store)){
+            if(!getPass(in)){
                 std::cout<<" --------------- Secure Password Manager --------------- \n";
                 
                 for(int i = 0; i < store.size(); i++){
