@@ -91,11 +91,17 @@ class password{
             return 0;
         }
 
-        inline void write(std::ofstream& out ,const std::string& site , const std::string& user , const std::string& pass){
+        void write(std::ofstream& out ,const std::string& site , const std::string& user , const std::string& pass){
             out<<std::flush;
             out<<"site:"<<site<<std::endl;
             out<<"user:"<<user<<std::endl;
             out<<"pass:"<<pass<<std::endl;
+
+            store.push_back({
+                site,
+                user,
+                pass
+            });
         }
 
         void viewPass(){ // wrapper around getPass() because getPass() is a flaming piece of mess 
@@ -127,7 +133,7 @@ class password{
 
                 std::cin >> choice;
                 std::string dummy;
-                std::getline(std::cin, dummy);
+                std::getline(std::cin, dummy); 
 
                 switch (choice) {
                     case 1:
