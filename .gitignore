@@ -1,0 +1,10 @@
+*.desktop
+
+*.out
+*.bin
+*.run
+
+a.out
+
+# Ignore all .txt files
+*.txt
